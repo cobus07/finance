@@ -1,0 +1,20 @@
+body {
+  background: #fafafa;
+  color: #353535;
+}
+
+.login_name h1 {
+  padding-top: 30px;
+  padding-bottom: 50px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: inherit;
+}
+
+.login_panel {
+  padding: 40px;
+  background: #FFF;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(150,150,150,0.3);
+}

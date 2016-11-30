@@ -4,6 +4,7 @@ var fs = require('fs');
 var minhtml = require('gulp-htmlmin');
 var mincss = require('gulp-uglifycss');
 var minjs = require('gulp-uglifyjs');
+var rename = require('gulp-rename');
 
 // cleanup the public folder
 /**
@@ -41,17 +42,25 @@ gulp.task('libs', function() {
       'node_modules/backbone/backbone-min.map',
       'node_modules/underscore/underscore-min.js',
       'node_modules/underscore/underscore-min.map',
-      'node_modules/zepto/dist/zepto.min.js',
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/jquery/dist/jquery.min.js.map',
       'node_modules/bootstrap/dist/bootstrap.min.js',
     ])
-    .pipe(gulp.dest('frontend/public/js/libs/'));
+    .pipe(rename(function(path) {
+      if (path.extname == '.js') {
+        path.basename = path.basename.replace(/[\.-].*$/, '');
+      }
+    }))
+    .pipe(gulp.dest('frontend/public/js/lib/'));
 
   // compress js before moving
-  gulp.src([
-    'node_modules/requirejs/require.js',
-  ])
-  .pipe(minjs())
-  .pipe(gulp.dest('frontend/public/js/libs/'));
+  gulp.src(['node_modules/requirejs/require.js'])
+    .pipe(minjs())
+    .pipe(gulp.dest('frontend/public/js/lib/'));
+
+  gulp.src(['node_modules/text/text.js'])
+    .pipe(minjs())
+    .pipe(gulp.dest('frontend/public/js/lib/'));
 
   // move css libs to frontend/public/css/
   gulp.src([
@@ -100,9 +109,21 @@ gulp.task('compress', function() {
     .pipe(gulp.dest(destpath));
 
   // compress js files
-  gulp.src(srcpath + 'js/**/*.js')
+  gulp.src(srcpath + 'js/*.js')
     .pipe(minjs())
     .pipe(gulp.dest(destpath + 'js/'));
+
+  gulp.src(srcpath + 'js/collections/*.js')
+    .pipe(minjs())
+    .pipe(gulp.dest(destpath + 'js/collections/'));
+
+  gulp.src(srcpath + 'js/modules/*.js')
+    .pipe(minjs())
+    .pipe(gulp.dest(destpath + 'js/modules/'));
+
+  gulp.src(srcpath + 'js/views/*.js')
+//    .pipe(minjs())
+    .pipe(gulp.dest(destpath + 'js/views/'));
 
   // move favicon.ico to public/
   gulp.src(srcpath + '*.ico')
@@ -110,6 +131,7 @@ gulp.task('compress', function() {
 
   // move templetes to public/tpl/
   gulp.src(srcpath + 'tpl/*')
+    .pipe(minhtml())
     .pipe(gulp.dest(destpath + 'tpl/'));
 
   // move images from src/img folder to public/img
