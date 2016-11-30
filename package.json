@@ -1,0 +1,19 @@
+{
+  "name": "finance",
+  "version": "1.0.0",
+  "description": "This is a finance system for personal daily finance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "finance",
+    "system"
+  ],
+  "author": "qipan",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "eslint-config-google": "^0.7.1"
+  }
+}
