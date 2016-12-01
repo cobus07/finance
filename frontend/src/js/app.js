@@ -9,21 +9,31 @@ requirejs.config({
 
 require([
   'js/lib/backbone',
-  'js/views/loginView',
-  ], function(Backbone, LoginView) {
+  'js/views/LoginView',
+  'js/views/HomeView',
+  ], function(
+    Backbone,
+    LoginView,
+    HomeView
+  ) {
   var AppRouter = Backbone.Router.extend({
     routes: {
       '': 'login',
+      'home': 'home',
     },
 
     initialize: function() {
       this.loginView = new LoginView({model: {}});
-      console.log($('#content').text());
+      this.homeView = new HomeView({model: {}});
     },
 
     login: function() {
       this.loginView.render();
     },
+
+    home: function() {
+      this.homeView.render();
+    }
   });
 
   app = new AppRouter();
