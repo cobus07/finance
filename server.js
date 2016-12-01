@@ -47,7 +47,7 @@ if (app.get('env') === 'production') {
   * Routes
   */
 // MAIN
-
+app.post('/api/auth', routes.auth);
 
 /**
  * App start
