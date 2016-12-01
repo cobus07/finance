@@ -131,10 +131,21 @@ gulp.task('compress', function() {
 
   // move templetes to public/tpl/
   gulp.src(srcpath + 'tpl/*')
-    .pipe(minhtml())
+    .pipe(minhtml({
+      minifyCSS: true,
+      minifyJS: true,
+      collapseInlineTagWhitespace: true,
+      collapseWhitespace: true,
+      quoteCharacter: '"',
+      removeComments: true,
+      sortAttributes: true}))
     .pipe(gulp.dest(destpath + 'tpl/'));
 
   // move images from src/img folder to public/img
   gulp.src(srcpath + 'img/*')
     .pipe(gulp.dest(destpath + 'img/'));
+
+  // move fonts from src/fonts/ to public/fonts
+  gulp.src(srcpath + 'fonts/*')
+    .pipe(gulp.dest(destpath + 'fonts/'));
 });

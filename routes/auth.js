@@ -1,5 +1,8 @@
 module.exports = function(req, res, next) {
   // Need to connect to db to authenticate
-  console.log(req.body);
-  res.json({msg: 'Authenticated'});
+  if (req.body.username === 'qipan' && req.body.password === 'welcome') {
+    res.json({msg: 'Authenticated'});
+  } else {
+    res.json({msg: 'Unauthenticated'});
+  }
 };
