@@ -23,12 +23,19 @@ define([
         var $pass = $('#password');
 
         e.preventDefault();
-        $loginBtn.addClass('disabled');
+
+        // cleanup error msg
+        $user.removeClass('form-error');
+        $pass.removeClass('form-error');
+        $('#user_error').text('');
+        $('#pass_error').text('');
+        $('#invalid_login').text('');
+        $loginBtn.removeClass('disabled');
+
 
         if ($user.val() === '') {
           $user.addClass('form-error');
           $('#user_error').text('请输入您的用户名');
-          $loginBtn.removeClass('disabled');
           $user.focus();
           return;
         }
@@ -36,22 +43,24 @@ define([
         if ($pass.val() === '') {
           $pass.addClass('form-error');
           $('#pass_error').text('请输入您的密码');
-          $loginBtn.removeClass('disabled');
-          $user.focus();
+          $pass.focus();
           return;
         }
+
+        $loginBtn.addClass('disabled');
 
         $.ajax({
           url: '/api/auth',
           method: 'POST',
-          data: 'username=' + $username.val() +
-                '&password=' + $username.val(),
+          data: 'username=' + $user.val() + '&password=' + $pass.val(),
           success: function(data) {
             if (data.msg == 'Authenticated') {
               app.navigate('home', {trigger: true});
             } else {
+              $('#invalid_login').text('用户名或密码不正确');
+              $pass.val('');
+              $user.val('').focus();
               $loginBtn.removeClass('disabled');
-
             }
           },
         });
