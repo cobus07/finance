@@ -1,6 +1,6 @@
 define([
-  'js/lib/backbone',
-  'js/lib/text!/tpl/login.html',
+  '../lib/backbone',
+  '../lib/text!../../tpl/login.html',
 ], function(Backbone, loginTpl) {
     return LoginView = Backbone.View.extend({
       tagName: 'div',
@@ -11,9 +11,8 @@ define([
       },
 
       render: function() {
-        $('#content').empty().html(this.$el.html(this.template({
-          systemName: '个人财务管理系统',
-        })));
+        $('#content').empty().html(this.$el.html(this.template(this.model)));
+        this.delegateEvents();
         return this;
       },
 
@@ -55,7 +54,7 @@ define([
           data: 'username=' + $user.val() + '&password=' + $pass.val(),
           success: function(data) {
             if (data.msg == 'Authenticated') {
-              app.navigate('home', {trigger: true});
+              app.navigate('home', {trigger: true, replace: true});
             } else {
               $('#invalid_login').text('用户名或密码不正确');
               $pass.val('');

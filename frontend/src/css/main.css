@@ -3,31 +3,44 @@
   src: url('../fonts/OpenSans-Regular.ttf');
 }
 
-body {
-  background: #ffffff;
-  color: #404040;
-  font-family: "Helvetica Neue",Helvetica,'Open Sans',Arial,sans-serif!important;
+html {
+  height: 100%;
 }
 
+body {
+  background: url('../img/background.jpg') no-repeat center;
+  background-size: cover;
+  height: 100%;
+  color: #555555;
+  font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif!important;
+}
+
+/**
+ * login related
+ */
 .login-panel {
-  margin: 50px auto 50px;
+  margin: 100px auto 50px;
   padding: 20px 40px 40px;
   max-width: 350px;
-  background: #f7f7f7;
+  background: #3a3f45;
+  color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  transition: height 1s ease-in-out;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3) ;
+}
+
+.login-panel .form-control:focus {
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.3), 0 0 8px rgba(102,175,233,0.8);
 }
 
 .login-name h1 {
   padding-top: 0px;
-  padding-bottom: 50px;
-  font-size: 22px;
+  padding-bottom: 30px;
+  font-size: 20px;
   font-weight: normal;
   font-family: 'Open Sans';
+  -webkit-font-smoothing: antialiased;
   text-align: center;
   letter-spacing: 1px;
-  color: inherit;
 }
 
 div.form-group {
@@ -42,8 +55,11 @@ button.form-control {
   hegiht: 36px;
 }
 
-input[type=text].form-error, input[type=password].form-error {
+input[type=text].form-error,
+input[type=password].form-error {
   border: 1px solid #dd4b39;
+  box-shadow: 0px 0px 8px #dd4b39 inset;
+  transition: all .225s ease-out;
 }
 
 span.error-msg {
@@ -56,4 +72,172 @@ span.error-msg {
 
 span#invalid_login {
   text-align: center;
+}
+
+
+/**
+ * home related
+ */
+.header {
+  height: 48px;
+  background: #2e3238;
+  transform: translate3d(0, 0, 0);
+  transition: transform .225s ease-out;
+}
+
+.header .menubar {
+  height: 100%;
+  line-height: 48px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 50px;
+}
+
+.menubar span {
+  font-size: 18px;
+  color: #999;
+}
+
+.header .logout {
+  height: 100%;
+  line-height: 48px;;
+  text-align: right;
+  padding-right: 15px;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.header .logout a {
+  color: red;
+  text-decoration: none;
+}
+
+.menu {
+  width: 100%;
+  height: 100%;
+  background: red;  /* background for test  */
+}
+
+.menu .menu-bottom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* background for test */
+  transition: background-color .225s;
+}
+
+.menu .menu-bottom-active {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menu .menu-content {
+  position: fixed;
+  top: 0px;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: #2e3238;
+  color: #fff;
+  transform: translate3d(0, 0, 0);
+  transition: transform .225s ease-out, left .225s ease-out;
+}
+
+/*
+@media (max-width: 992px) {
+  .menu .menu-content {
+    left: -250px !important;
+    transition: left .225s ease-out;
+  }
+}*/
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .menu .menu-content {
+    left: 0 !important;
+    transition: left .225s ease-out;
+  }
+  .header {
+    transform: translate3d(0, -48px, 0);
+    transition: transform .225 ease-out;
+  }
+}
+@media (min-width: 1200px) {
+  .menu .menu-content {
+    left: 0 !important;
+    transition: left .225s ease-out;
+  }
+  .header {
+    transform: translate3d(0, -48px, 0);
+    transition: transform .225 ease-out;
+  }
+}
+
+.menu .menu-content > div {
+  position: relative;
+  height: 100%;
+}
+
+.profile a,
+.finance-menu a {
+  display: block;
+  padding-left: 24px;
+  line-height: 48px;
+  font-size: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.profile a:active,
+.finance-menu a:active {
+  background: #3A3F45;
+}
+
+.profile a:hover,
+.finance-menu a:hover {
+  background: #3A3F45;
+}
+
+
+.finance-menu > ul {
+  margin: 0;
+  padding: 0;
+}
+
+.finance-menu >ul >li {
+  list-style-type: none;
+}
+
+.menu .menu-content .logout {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.menu .menu-content .logout  button {
+  line-height: 48px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: #ddd;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: #b14e43;
+  border: 0;
+  border-radius: 0;
+}
+
+.menu .menu-content .logout  button:active,
+.menu .menu-content .logout  button:focus  {
+  background: #c06359;
+  color: #ffffff;
+  outline: 0;
+}
+
+.menu .menu-content .logout  button:hover {
+  background: #c06359;
+  color: #ffffff;
+  outline: 0;
 }
