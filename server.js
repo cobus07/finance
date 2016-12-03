@@ -1,12 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var SessionStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var routes = require('./routes');
 
 var app = module.exports = express();
 
+var sessStoreUrl = 'mongodb://localhost/finance';
 
 /**
  * Enviroment configuration
@@ -30,16 +32,16 @@ if (app.get('env') === 'production') {
  * Middleware configuration
  */
  app.use(express.static('frontend/public'));
- app.use(bodyParser.urlencoded({extended: true}));
+ app.use(bodyParser.urlencoded({extended: false}));
  app.use(bodyParser.json());
  app.use(cookieParser());
  app.use(session({
-   secret: 'I like programming and live free',
-   saveUninitialized: true,
-   resave: false,
-   cookie: {
-     secure: true,
-   },
+   resave: false, // don't save session if unmodified
+   saveUninitialized: false, // don't create session until something stored
+   secret: 'aha, secret for every',
+   store: new SessionStore({
+     url: sessStoreUrl,
+   }),
  }));
 
 
@@ -48,6 +50,8 @@ if (app.get('env') === 'production') {
   */
 // MAIN
 app.post('/api/auth', routes.auth);
+app.post('/api/logout', routes.logout);
+
 
 /**
  * App start
