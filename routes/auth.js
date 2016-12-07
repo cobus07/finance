@@ -1,11 +1,21 @@
 module.exports = function(req, res, next) {
-  // Need to connect to db to authenticate
-  if (req.body.username === 'qipan' && req.body.password === 'welcome') {
-    req.session.user = req.body.username;
-    res.json({msg: 'Authenticated'});
-    console.log('user %s log in successfully.', req.body.username);
-  } else {
-    res.json({msg: 'Unauthenticated'});
-    console.log('user %s log in failed', req.body.username);
-  }
+  var username = req.body.username;
+  var password = req.body.password;
+  var db = req.db;
+  db.User.findOne({username: username}, function(err, user) {
+    if (err) {
+      res.json({msg: 'Error acoured'});
+    } else {
+      if (!user) {
+        res.json({msg: 'User doesn\'t exist'});
+      } else {
+        if (user.username === username && user.password === password) {
+          req.session.userId = user._id;
+          res.json({msg: 'Authenticated'});
+        } else {
+          res.json({msg: 'Unauthenticated'});
+        }
+      }
+    }
+  });
 };

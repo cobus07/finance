@@ -1,0 +1,46 @@
+<div class='finance-list' id='finance-list'>
+  <div class='add'>
+    <div class="form-inline">
+      <div class="form-group">
+        <select id='income' class="form-control">
+          <option value="支出">支出</option>
+          <option value="收入">收入</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text" class='form-control' name='number' id='number' placeholder="金额（元）">
+      </div>
+      <div class="form-group">
+        <input type="text" class='form-control' name='purpose' id='purpose' placeholder="用途">
+      </div>
+      <div class="form-group">
+        <input type="text" class='form-control' name='purpose' id='date' data-provide='datepicker' placeholder="时间（默认为当天）">
+      </div>
+      <div class="form-group">
+        <button type="sumbit" class='btn btn-primary form-control' id='add'>添加记录</button>
+      </div>
+    </div>
+  </div>
+  <div class="finance-table">
+    <table class='table table-striped' style="background: #fff">
+      <thead>
+        <tr>
+          <th>时间
+            <b class="caret"></b>
+          </th>
+          <th>金额(元)
+            <b class="caret"></b>
+          </th>
+          <th>用途
+            <b class="caret"></b>
+          </th>
+          <th>记录时间
+            <b class="caret"></b>
+          </th>
+          <th>#</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>

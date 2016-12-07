@@ -1,14 +1,16 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var SessionStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo')(session);
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
+var compression = require('compression');
 var routes = require('./routes');
 
 var app = module.exports = express();
 
-var sessStoreUrl = 'mongodb://localhost/finance';
+var mongoDbUrl = process.MONGODB_URL || 'mongodb://localhost/finance';
+var connection = mongoose.createConnection(mongoDbUrl);
 
 /**
  * Enviroment configuration
@@ -31,6 +33,7 @@ if (app.get('env') === 'production') {
 /**
  * Middleware configuration
  */
+ app.use(compression());
  app.use(express.static('frontend/public'));
  app.use(bodyParser.urlencoded({extended: false}));
  app.use(bodyParser.json());
@@ -39,8 +42,8 @@ if (app.get('env') === 'production') {
    resave: false, // don't save session if unmodified
    saveUninitialized: false, // don't create session until something stored
    secret: 'aha, secret for every',
-   store: new SessionStore({
-     url: sessStoreUrl,
+   store: new MongoStore({
+     url: mongoDbUrl,
    }),
  }));
 
@@ -49,9 +52,23 @@ if (app.get('env') === 'production') {
   * Routes
   */
 // MAIN
-app.post('/api/auth', routes.auth);
-app.post('/api/logout', routes.logout);
+var db = routes.db(connection);
+var checkLogin = routes.checkLogin;
+var finance = routes.finance;
+var profile = routes.profile;
 
+app.use(function(req, res, next) {
+  console.log(req.method, req.url);
+  next();
+});
+
+app.post('/api/auth', db, routes.auth);
+app.post('/api/logout', checkLogin, routes.logout);
+app.get('/api/profile', checkLogin, db, profile.getProfile);
+app.put('/api/profile', checkLogin, db, profile.updateProfile);
+app.get('/api/finance', checkLogin, db, finance.getCollection);
+app.post('/api/finance', checkLogin, db, finance.createModel);
+app.delete('/api/finance/:id', checkLogin, db, finance.deleteModel);
 
 /**
  * App start

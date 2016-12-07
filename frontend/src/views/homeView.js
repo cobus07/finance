@@ -1,15 +1,40 @@
 define([
-  '../views/MainView',
-  '../lib/text!../../tpl/home.html',
+//  '../lib/jquery',
+//  '../lib/underscore',
+//  '../lib/backbone',
+//  '../views/mainView',
+  '../lib/text!./../tpl/home.html',
+  '../models/profileModel',
+  './financeGlanceView',
+  './financeDetailView',
+  './profileView',
 ], function(
-  MainView,
-  homeTpl) {
+//  $,
+//  _,
+//  Backbone,
+//  MainView,
+  homeTpl,
+  ProfileModel,
+  FinanceGlanceView,
+  FinanceDetailView,
+  ProfileView
+) {
   return HomeView = Backbone.View.extend({
     tagName: 'div',
     className: 'home-wrapper',
     template: _.template(homeTpl),
 
     initialize: function() {
+      this.childViews = {
+        glance: new FinanceGlanceView(),
+        detail: new FinanceDetailView(),
+        profile: new ProfileView(),
+      };
+      _.each(this.childViews, function(view, instance) {
+        view.parentView = this;
+      }, this);
+
+      this.model = new ProfileModel();
     },
 
     events: {
@@ -18,12 +43,28 @@ define([
       'click .menu-bottom': 'hideMenu',
     },
 
-    render: function() {
-      this.$el.html(this.template());
+    load: function(subview) {
+      var that = this;
+      this.model.fetch({
+        success: function(model, res) {
+          if (res.id) {
+            that.render(subview);
+            that.childViews[subview].load();
+          } else {
+            console.log(res.msg);
+            app.navigate('', {trigger: true, replace: true});
+          }
+        },
+        error: function(__, res) {
+          console.log(res.msg);
+          app.navigate('', {trigger: true, replace: true});
+        },
+      });
+    },
 
-      this.mainView = this.mainView || new MainView();
+    render: function(activeView) {
+      this.$el.html(this.template({active: activeView}));
 
-      this.$('#main').append(this.mainView.render().el);
       $('#content').empty().append(this.el);
       this.delegateEvents();
     },

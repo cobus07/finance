@@ -1,0 +1,15 @@
+<td class='date'>
+  <%= (new Date(model.date)).toLocaleDateString() %>
+</td>
+<td class='money'>
+  <%= model.income ? model.number : -model.number %>
+</td>
+<td class='purpose'>
+  <%= model.purpose %>
+</td>
+<td class='create-time'>
+  <%= (new Date(model.create)).toLocaleString() %>
+</td>
+<td>
+  <span class="glyphicon glyphicon-remove delete"></span>
+</td>

@@ -1,17 +1,28 @@
 define([
-  '../lib/backbone',
-  '../lib/text!../../tpl/login.html',
-], function(Backbone, loginTpl) {
+//  'jquery',
+//  '../lib/underscore',
+//  '../lib/backbone',
+  '../lib/text!../tpl/login.html',
+], function(
+//  $,
+//  _,
+//  Backbone,
+  loginTpl
+) {
     return LoginView = Backbone.View.extend({
       tagName: 'div',
-      template: _.template(loginTpl),
+      template: loginTpl,
 
       events: {
         'click #login': 'login',
       },
 
       render: function() {
-        $('#content').empty().html(this.$el.html(this.template(this.model)));
+        $('#content').empty().html(
+          this.$el.html(
+            _.template(this.template)(this.model)
+          )
+        );
         this.delegateEvents();
         return this;
       },

@@ -1,16 +1,12 @@
 module.exports = function(req, res, next) {
-  var user = req.session.user;
-  if (req.session.user) {
-    req.session.destroy(function(err) {
+  var userId = req.session.userId;
+  req.session.destroy(function(err) {
       if (err) {
-        res.json({msg: 'failed'});
-        console.log('user %s logout failed.', user);
+        res.json({msg: 'logout failed'});
+        console.log('user %s logout failed.', userId);
       } else {
         res.json({msg: 'success'});
-        console.log('user %s logout sucessed.', user);
+        console.log('user %s logout sucessed.', userId);
       }
     });
-  } else {
-    res.json({msg: 'Not login'});
-  }
 };

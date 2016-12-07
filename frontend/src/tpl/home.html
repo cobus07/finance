@@ -14,15 +14,11 @@
       <div class="menu-card">
         <div class="finance-menu">
           <ul>
-            <li><a href="#">账单概览</a></li>
-            <li><a href="#">历史账单</a></li>
+            <li><a href="#home/glance" class="<%= active === 'glance' ? 'active' : '' %>">账单概览</a></li>
+            <li><a href="#home/detail" class="<%= active === 'detail' ? 'active' : '' %>">账单详情</a></li>
+            <li><a href="#home/profile" class="<%= active === 'profile' ? 'active' : '' %>" id="profile">设置</a></li>
           </ul>
         </div>
-      </div>
-      <div class="menu-card">
-          <div class="profile">
-            <a href="#" id="profile">设置</a>
-          </div>
       </div>
       <div class="logout">
         <button class="text-center btn" id="logout">退出</button>
@@ -31,6 +27,4 @@
   </div>
   </div>
 </div>
-<div class="row">
-  <div id="main"></div>
-</div>
+<div id="main"></div>
