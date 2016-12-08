@@ -30,12 +30,9 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
-    "jquery-ui": "^1.12.1",
-    "mongodb": "^2.2.12",
     "mongoose": "^4.7.0",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text",
     "underscore": "^1.8.3",
-    "zepto": "^1.2.0"
   }
 }
