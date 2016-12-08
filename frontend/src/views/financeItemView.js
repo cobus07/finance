@@ -21,7 +21,7 @@ define([
     },
 
     destroyView: function() {
-      this.model.destroy();
+      this.model.destroy({wait: true});
     },
   });
 });

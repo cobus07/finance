@@ -57,10 +57,6 @@ var checkLogin = routes.checkLogin;
 var finance = routes.finance;
 var profile = routes.profile;
 
-app.use(function(req, res, next) {
-  console.log(req.method, req.url);
-  next();
-});
 
 app.post('/api/auth', db, routes.auth);
 app.post('/api/logout', checkLogin, routes.logout);

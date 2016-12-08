@@ -206,7 +206,7 @@ gulp.task('compress', function() {
   );
 });
 
-gulp.task('requirejs_pack', ['libs', 'compress'], function(){
+gulp.task('requirejs_pack', ['libs', 'compress'], function() {
   var config = {
     baseUrl: './frontend/public',
     paths: {
@@ -215,8 +215,7 @@ gulp.task('requirejs_pack', ['libs', 'compress'], function(){
     name: 'app',
     out: './frontend/public/main.js',
   };
-  rjs.optimize(config, function(buildRes) {
-    var contents = fs.readFileSync(config.out, 'utf8');
+  rjs.optimize(config, function() {
   }, function(err) {
     console.log(err);
   });

@@ -13,10 +13,8 @@ define([
     defaults: {
       number: 0,
       purpose: '',
-      income: false,
       date: Date.now(),
       create: Date.now(),
-      update: Date.now(),
     },
 
     initialize: function() {

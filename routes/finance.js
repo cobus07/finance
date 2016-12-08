@@ -12,6 +12,7 @@ module.exports.getCollection = function(req, res, next) {
           purpose: finance.purpose,
           date: finance.date,
           create: finance.create,
+          income: finance.income,
         };
       }));
     }
